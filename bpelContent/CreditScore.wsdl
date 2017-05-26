@@ -1,0 +1,60 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://creditscoresoapservice.com/soap" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://creditscoresoapservice.com/soap" targetNamespace="http://creditscoresoapservice.com/soap">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://creditscoresoapservice.com/soap">
+<xs:element name="getCreditScoreRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="ssn" type="xs:string"/>
+<xs:element name="firstname" type="xs:string"/>
+<xs:element name="lastname" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getCreditScoreResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="creditscore" type="tns:creditscore"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="creditscore">
+<xs:sequence>
+<xs:element name="creditScore" type="xs:int"/>
+<xs:element name="ssn" type="xs:string"/>
+<xs:element name="firstname" type="xs:string"/>
+<xs:element name="lastname" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="getCreditScoreResponse">
+<wsdl:part element="tns:getCreditScoreResponse" name="getCreditScoreResponse"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="getCreditScoreRequest">
+<wsdl:part element="tns:getCreditScoreRequest" name="getCreditScoreRequest"></wsdl:part>
+</wsdl:message>
+<wsdl:portType name="CreditscorePort">
+<wsdl:operation name="getCreditScore">
+<wsdl:input message="tns:getCreditScoreRequest" name="getCreditScoreRequest"></wsdl:input>
+<wsdl:output message="tns:getCreditScoreResponse" name="getCreditScoreResponse"></wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="CreditscorePortSoap11" type="tns:CreditscorePort">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="getCreditScore">
+<soap:operation soapAction=""/>
+<wsdl:input name="getCreditScoreRequest">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getCreditScoreResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="CreditscorePortService">
+<wsdl:port binding="tns:CreditscorePortSoap11" name="CreditscorePortSoap11">
+<!-- <soap:address location="http://192.168.0.9:8080/CreditScoreSoapService-1/soapws"/> -->
+<soap:address location="http://localhost:8081/CreditScoreSoapService-1/soapws"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

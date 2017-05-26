@@ -1,0 +1,65 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://soapwebservice.com/customer" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://soapwebservice.com/customer" targetNamespace="http://soapwebservice.com/customer">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://soapwebservice.com/customer">
+<xs:element name="getCustomerRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="customerId" type="xs:string"/>
+<xs:element name="ssn" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getCustomerResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="customer" type="tns:customer"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="customer">
+<xs:sequence>
+<xs:element name="customerId" type="xs:string"/>
+<xs:element name="firstname" type="xs:string"/>
+<xs:element name="lastname" type="xs:string"/>
+<xs:element name="age" type="xs:int"/>
+<xs:element name="emailid" type="xs:string"/>
+<xs:element name="phone" type="xs:int"/>
+<xs:element name="ssn" type="xs:string"/>
+<xs:element name="carModelYear" type="xs:int"/>
+<xs:element name="carManufacturer" type="xs:string"/>
+<xs:element name="monthlySalary" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="getCustomerRequest">
+<wsdl:part element="tns:getCustomerRequest" name="getCustomerRequest"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="getCustomerResponse">
+<wsdl:part element="tns:getCustomerResponse" name="getCustomerResponse"></wsdl:part>
+</wsdl:message>
+<wsdl:portType name="CustomerPort">
+<wsdl:operation name="getCustomer">
+<wsdl:input message="tns:getCustomerRequest" name="getCustomerRequest"></wsdl:input>
+<wsdl:output message="tns:getCustomerResponse" name="getCustomerResponse"></wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="CustomerPortSoap11" type="tns:CustomerPort">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="getCustomer">
+<soap:operation soapAction=""/>
+<wsdl:input name="getCustomerRequest">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getCustomerResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="CustomerPortService">
+<wsdl:port binding="tns:CustomerPortSoap11" name="CustomerPortSoap11">
+<!-- <soap:address location="http://192.168.0.9:8080/CustomerDetailsSoapServcie-1/soapws"/> -->
+<soap:address location="http://localhost:8081/CustomerDetailsSoapServcie-1/soapws"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

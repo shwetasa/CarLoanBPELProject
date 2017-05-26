@@ -1,0 +1,67 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://loansoapservice.com/soap" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://carloansoapservice.com/soap" targetNamespace="http://carloansoapservice.com/soap">
+<wsdl:types>
+<xs:schema xmlns:tns="http://loansoapservice.com/soap" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://loansoapservice.com/soap">
+<xs:element name="getCarLoanRequest">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="creditScore" type="xs:int"/>
+<xs:element name="carManufacturer" type="xs:string"/>
+<xs:element name="carModelYear" type="xs:int"/>
+<xs:element name="monthlySalary" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="getCarLoanResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="Carloan" type="tns:carloan"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="carloan">
+<xs:sequence>
+<xs:element name="creditScore" type="xs:int"/>
+<xs:element name="carManufacturer" type="xs:string"/>
+<xs:element name="carModelYear" type="xs:int"/>
+<xs:element maxOccurs="unbounded" minOccurs="1" name="bankAndInterest" type="tns:bankAndInterest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bankAndInterest">
+<xs:sequence>
+<xs:element name="bankName" type="xs:string"/>
+<xs:element name="interestRate" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="getCarLoanRequest">
+<wsdl:part element="sch:getCarLoanRequest" name="getCarLoanRequest"></wsdl:part>
+</wsdl:message>
+<wsdl:message name="getCarLoanResponse">
+<wsdl:part element="sch:getCarLoanResponse" name="getCarLoanResponse"></wsdl:part>
+</wsdl:message>
+<wsdl:portType name="CarLoansPort">
+<wsdl:operation name="getCarLoan">
+<wsdl:input message="tns:getCarLoanRequest" name="getCarLoanRequest"></wsdl:input>
+<wsdl:output message="tns:getCarLoanResponse" name="getCarLoanResponse"></wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="CarLoansPortSoap11" type="tns:CarLoansPort">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="getCarLoan">
+<soap:operation soapAction=""/>
+<wsdl:input name="getCarLoanRequest">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="getCarLoanResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="CarLoansPortService">
+<wsdl:port binding="tns:CarLoansPortSoap11" name="CarLoansPortSoap11">
+<!-- <soap:address location="http://192.168.0.9:8080/LoanSoapService-1/soapws"/> -->
+<soap:address location="http://localhost:8081/LoanSoapService-1/soapws"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>
